@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* AI Sign Language Translation Glove Design System */
+
+@layer base {
+  :root {
+    /* Core brand colors */
+    --background: 0 0% 100%;
+    --foreground: 221 39% 11%;
+    
+    /* Primary brand - Tech blue */
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 98%;
+    --primary-glow: 217 91% 70%;
+    
+    /* Secondary - Warm purple for accessibility */
+    --secondary: 262 83% 58%;
+    --secondary-foreground: 0 0% 98%;
+    
+    /* Accent - Warm orange for connection */
+    --accent: 25 95% 53%;
+    --accent-foreground: 0 0% 98%;
+    
+    /* Success - For positive interactions */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 98%;
+    
+    /* Neutral colors */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 60%;
+    
+    /* Card and surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 221 39% 11%;
+    
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 221 39% 11%;
+    
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    
+    /* Design system gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(262 83% 58%));
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(262 83% 58%) 50%, hsl(25 95% 53%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(217 91% 98%) 100%);
+    
+    /* Shadows */
+    --shadow-glow: 0 0 40px hsl(217 91% 60% / 0.3);
+    --shadow-card: 0 10px 30px -10px hsl(221 39% 11% / 0.1);
+    --shadow-primary: 0 10px 30px -10px hsl(217 91% 60% / 0.3);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 221 39% 6%;
+    --foreground: 0 0% 98%;
+    
+    --primary: 217 91% 70%;
+    --primary-foreground: 221 39% 6%;
+    
+    --secondary: 262 83% 68%;
+    --secondary-foreground: 221 39% 6%;
+    
+    --accent: 25 95% 63%;
+    --accent-foreground: 221 39% 6%;
+    
+    --success: 142 71% 55%;
+    --success-foreground: 221 39% 6%;
+    
+    --muted: 215 28% 17%;
+    --muted-foreground: 215 20% 65%;
+    --border: 215 28% 17%;
+    --input: 215 28% 17%;
+    --ring: 217 91% 70%;
+    
+    --card: 215 28% 9%;
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 215 28% 9%;
+    --popover-foreground: 0 0% 98%;
+    
+    --destructive: 0 84% 70%;
+    --destructive-foreground: 221 39% 6%;
+    
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 70%) 0%, hsl(262 83% 68%) 50%, hsl(25 95% 63%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(221 39% 6%) 0%, hsl(215 28% 9%) 100%);
+    
+    --shadow-glow: 0 0 40px hsl(217 91% 70% / 0.2);
+    --shadow-card: 0 10px 30px -10px hsl(0 0% 0% / 0.3);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .gradient-subtle {
+    background: var(--gradient-subtle);
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .shadow-primary {
+    box-shadow: var(--shadow-primary);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+}
