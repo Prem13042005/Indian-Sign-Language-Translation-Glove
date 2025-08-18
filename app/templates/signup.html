@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | SignGlove AI</title>
+  <link rel="stylesheet" href="/app/static/css/signup.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    
+  <div class="signup-container">
+    <!-- Logo -->
+    <div class="logo">
+      <i class="fa-solid fa-hands fa-2x"></i>
+      <span>SignGlove AI</span>
+    </div>
+
+    <!-- Card -->
+    <div class="signup-card">
+      <h2>Create your account</h2>
+      <p class="subtitle">Join the future of accessible communication</p>
+      
+      <form id="signupForm">
+        <!-- Name Row -->
+        <div class="input-row">
+          <div class="input-group">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" placeholder="First Name" required>
+          </div>
+          <div class="input-group">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" placeholder="Last Name" required>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="input-group">
+          <i class="fa-solid fa-envelope"></i>
+          <input type="email" placeholder="Email" required>
+        </div>
+
+        <!-- Password -->
+        <div class="input-group">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" id="password" placeholder="Create a strong password" required>
+          <i class="fa-solid fa-eye toggle-password" data-target="password"></i>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="input-group">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+          <i class="fa-solid fa-eye toggle-password" data-target="confirmPassword"></i>
+        </div>
+
+        <p class="terms">
+          By creating an account, you agree to our 
+          <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        </p>
+
+        <button type="submit" class="btn">Create Account</button>
+      </form>
+
+      <p class="footer-text">
+        Already have an account? <a href="/app/templates/signin.html">Sign in</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="/app/static/js/signup.js"></script>
+</body>
+</html>

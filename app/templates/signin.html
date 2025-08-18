@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | SignGlove AI</title>
+  <link rel="stylesheet" href="/app/static/css/signin.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="signin-container">
+    <!-- Logo -->
+    <div class="logo">
+      <i class="fa-solid fa-hands fa-2x"></i>
+      <span>SignGlove AI</span>
+    </div>
+
+    <!-- Card -->
+    <div class="signin-card">
+      <h2>Welcome back</h2>
+      <p class="subtitle">Sign in to your account to continue</p>
+      
+      <form id="signinForm">
+        <!-- Email -->
+        <div class="input-group">
+          <i class="fa-solid fa-envelope"></i>
+          <input type="email" placeholder="Enter your email" required>
+        </div>
+
+        <!-- Password -->
+        <div class="input-group">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" id="password" placeholder="Enter your password" required>
+          <i class="fa-solid fa-eye toggle-password" data-target="password"></i>
+        </div>
+
+        <!-- Options -->
+        <div class="options">
+          <label>
+            <input type="checkbox"> Remember me
+          </label>
+          <a href="#" class="forgot">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn">Sign In</button>
+      </form>
+
+      <p class="footer-text">
+        Don’t have an account? <a href="/app/templates/signup.html">Sign up</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="/app/static/js/signin.js"></script>
+</body>
+</html>
