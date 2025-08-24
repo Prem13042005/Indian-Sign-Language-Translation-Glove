@@ -1,3 +1,4 @@
+# run.py
 from app import create_app
 from app.models.db import db
 from flask_migrate import Migrate
