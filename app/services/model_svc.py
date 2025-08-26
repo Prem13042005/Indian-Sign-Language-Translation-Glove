@@ -1,2 +1,2 @@
-# Placeholder for future model loading/training logic
+# Placeholder
 pass

@@ -1,9 +1,7 @@
-Flask
-flask-cors
-flask-mysqldb
-SQLAlchemy
+flask
 joblib
-scikit-learn
-pyttsx3
-pandas
 numpy
+scikit-learn
+gtts
+googletrans==4.0.0-rc1
+playsound
