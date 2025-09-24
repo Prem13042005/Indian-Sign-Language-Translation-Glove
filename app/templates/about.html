@@ -261,6 +261,7 @@
       .why-cards {
         flex-direction: column;
       }
+    }
     </style>
 </head>
 <body>
@@ -273,15 +274,15 @@
           </div>
     <nav>
       <ul class="nav-links">
-        <li><a href="/app/templates/index.html">Home</a></li>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
         <li><a href="#">Features</a></li>
-        <li><a href="/app/templates/aboutus.html">About</a></li>
-        <li><a href="/app/templates/contact.html">Contact</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
       </ul>
     </nav>
     <div class="nav-actions">
-      <a href="/app/templates/signin.html" class="signin">Sign In</a>
-      <a href="/app/templates/signup.html" class="btn">Get Started</a>
+      <a href="{{ url_for('signin') }}" class="signin">Sign In</a>
+      <a href="{{ url_for('signup') }}" class="btn">Get Started</a>
     </div>
   </header>
 
@@ -329,7 +330,7 @@
     <h2>Ready to Bridge Communication Barriers?</h2>
     <p>Join thousands of users already experiencing inclusive communication.</p>
     <div class="buttons">
-      <a href="/app/templates/signup.html">Get Started Today</a>
+      <a href="{{ url_for('signup') }}">Get Started Today</a>
     </div>
   </section>
 </body>

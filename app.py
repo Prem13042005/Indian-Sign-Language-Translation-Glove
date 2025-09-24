@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
-from mysql.connector import connect, Error
+from flask import Flask, render_template, request, redirect, url_for, session
+from mysql.connector import connect, Error # pip install mysql-connector-python
 from werkzeug.security import generate_password_hash, check_password_hash
-import os
 
 # ---------- APP CONFIG ----------
 app = Flask(__name__, template_folder='app/templates', static_folder='app/static')
@@ -11,7 +10,7 @@ app.secret_key = "your_secret_key_here"  # change in production!
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'WJ28@krhps',   # your password here
+    'password': 'WJ28@krhps',  # replace with your MySQL password
     'database': 'glove_db'
 }
 
@@ -47,24 +46,23 @@ def signin():
     password = request.form.get('password')
 
     connection = get_db_connection()
-    if connection is None:
+    if not connection:
         return render_template('signin.html', error="Database connection failed")
 
     try:
-        cursor = connection.cursor(dictionary=True)
-        cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
-        user = cursor.fetchone()
+        with connection.cursor(dictionary=True) as cursor:
+            cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+            user = cursor.fetchone()
 
-        if user and check_password_hash(user['password'], password):
-            session['username'] = user['username']
-            return redirect(url_for('translation'))
-        else:
-            return render_template('signin.html', error="Invalid credentials")
+            if user and check_password_hash(user['password'], password):
+                session['username'] = user['username']
+                return redirect(url_for('translation'))
+            else:
+                return render_template('signin.html', error="Invalid credentials")
     except Error as e:
-        print(f"❌ Error during signin: {e}")
+        print(f"❌ Signin error: {e}")
         return render_template('signin.html', error="An error occurred")
     finally:
-        cursor.close()
         connection.close()
 
 # ---------- SIGN UP ----------
@@ -77,51 +75,54 @@ def signup():
     email = request.form.get('email')
     password = request.form.get('password')
 
+    if not username or not email or not password:
+        return render_template('signup.html', error="All fields are required")
+
     connection = get_db_connection()
-    if connection is None:
+    if not connection:
         return render_template('signup.html', error="Database connection failed")
 
     try:
-        cursor = connection.cursor(dictionary=True)
+        with connection.cursor(dictionary=True) as cursor:
+            # Check if username exists
+            cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+            if cursor.fetchone():
+                return render_template('signup.html', error="Username already exists")
 
-        # Check username
-        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
-        if cursor.fetchone():
-            return render_template('signup.html', error="Username already exists")
+            # Check if email exists
+            cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+            if cursor.fetchone():
+                return render_template('signup.html', error="Email already registered")
 
-        # Check email
-        cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
-        if cursor.fetchone():
-            return render_template('signup.html', error="Email already registered")
+            # Insert user
+            hashed_password = generate_password_hash(password)
+            cursor.execute(
+                "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)",
+                (username, email, hashed_password)
+            )
+            connection.commit()
+            return redirect(url_for('signin'))
 
-        hashed_password = generate_password_hash(password)
-        cursor.execute('INSERT INTO users (username, email, password) VALUES (%s, %s, %s)',
-                       (username, email, hashed_password))
-        connection.commit()
-        return redirect(url_for('signin'))
     except Error as e:
-        print(f"❌ Error during signup: {e}")
+        print(f"❌ Signup error: {e}")
         connection.rollback()
         return render_template('signup.html', error="An error occurred")
     finally:
-        cursor.close()
         connection.close()
 
-# ---------- TRANSLATION (Dashboard) ----------
+# ---------- DASHBOARD ----------
 @app.route('/translation')
 def translation():
     if 'username' not in session:
         return redirect(url_for('signin'))
     return render_template('translation.html', username=session['username'])
 
-# ---------- PROFILE (if you add profile.html) ----------
 @app.route('/profile')
 def profile():
     if 'username' not in session:
         return redirect(url_for('signin'))
     return render_template('profile.html', username=session['username'])
 
-# ---------- HISTORY (if you add history.html) ----------
 @app.route('/history')
 def history():
     if 'username' not in session:
@@ -137,7 +138,7 @@ def logout():
 # ---------- STATIC FILES ----------
 @app.route('/static/<path:path>')
 def send_static_files(path):
-    return send_from_directory('app/static', path)
+    return app.send_static_file(path)
 
 # ---------- MAIN ----------
 if __name__ == '__main__':
