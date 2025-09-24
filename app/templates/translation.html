@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignGlove AI</title>
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+      body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9fb;
+      color: #333;
+      transition: margin-left 0.3s;
+    }
+
+    /* Hamburger Icon */
+    .menu-toggle {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1001;
+      color: #5a31f4;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -220px; /* hidden by default */
+      height: 100%;
+      width: 220px;
+      background: #fff;
+      border-right: 1px solid #eee;
+      transition: left 0.3s;
+      padding-top: 60px;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    /* Hover behavior */
+    .menu-toggle:hover + .sidebar,
+    .sidebar:hover {
+      left: 0;
+    }
+
+    /* Adjust content when sidebar is shown */
+    .menu-toggle:hover ~ .main,
+    .sidebar:hover ~ .main {
+      margin-left: 220px;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      color: #333;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .nav a i {
+      min-width: 25px;
+      font-size: 18px;
+      color: #5a31f4;
+    }
+
+    .nav a:hover {
+      background: #5a31f4;
+      color: #fff;
+      border-radius: 8px;
+    }
+
+    .nav a:hover i {
+      color: #fff;
+    }
+
+    /* Main content */
+    .main {
+      margin-top: 70px;
+      margin-left: 60px;
+      padding: 25px;
+      transition: margin-left 0.3s;
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .header p {
+      color: #777;
+      margin-top: 5px;
+    }
+
+    /* Cards */
+    .cards {
+      display: flex;
+      gap: 30px;
+      margin-right: 20px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      flex: 1;
+      min-width: 300px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .card h3 {
+      margin: 0 0 15px;
+    }
+
+    .mic-box, .output-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed #ddd;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      color: #888;
+    }
+
+    .mic-box i {
+      font-size: 40px;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .output-box i {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #777;
+    }
+
+    select {
+      margin-bottom: 10px;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .detect-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: linear-gradient(90deg,#5a31f4,#8c52ff);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .detect-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Stats */
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 30px;
+      flex-wrap: wrap;
+      gap: 25px;
+    }
+
+    .stat {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      flex: 1;
+      min-width: 200px;
+      text-align: center;
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .stat h2 {
+      margin: 0;
+      color: #5a31f4;
+      font-size: 22px;
+    }
+
+    .stat p {
+      margin: 5px 0 0;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+   <!-- Hamburger -->
+  <i class="fa-solid fa-bars menu-toggle"></i>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="nav">
+      <a href="#"><i class="fa-solid fa-house"></i><span> Home</span></a>
+      <a href="translation.html"><i class="fa-solid fa-microphone"></i><span> Live Translation</span></a>
+      <a href="#"><i class="fa-solid fa-upload"></i><span> Upload Gestures</span></a>
+      <a href="history.html"><i class="fa-solid fa-clock-rotate-left"></i><span> History</span></a>
+      <a href="profile.html"><i class="fa-solid fa-user"></i><span> Profile</span></a>
+      <a href="#"><i class="fa-solid fa-gear"></i><span> Settings</span></a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <div class="header">
+      <h2>Live ISL Translation</h2>
+      <p>Real-time Indian Sign Language to Speech Translation</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Gesture Input</h3>
+        <div class="mic-box">
+          <i class="fa-solid fa-microphone"></i>
+          <p>Ready to Detect<br><small>Click to start gesture detection</small></p>
+          <button class="detect-btn">Start</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Speech Output</h3>
+        <div class="output-box">
+          <select>
+            <option>English</option>
+            <option>Hindi</option>
+            <option>Marathi</option>
+          </select>
+          <i class="fa-solid fa-volume-high"></i>
+          <p>Translated text will appear here</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <h2>0.8s</h2>
+        <p>Response Time</p>
+      </div>
+      <div class="stat">
+        <h2>85%</h2>
+        <p>Accuracy</p>
+      </div>
+      <div class="stat">
+        <h2>3</h2>
+        <p>Gestures Detected</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

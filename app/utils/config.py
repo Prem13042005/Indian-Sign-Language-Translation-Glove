@@ -1,1 +1,0 @@
-SUPPORTED_LANGUAGES = ["en", "hi", "ta"]  # Add more as needed

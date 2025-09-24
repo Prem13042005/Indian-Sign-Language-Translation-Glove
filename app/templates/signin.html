@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign In | SignGlove AI</title>
-  <link rel="stylesheet" href="/app/static/css/signin.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/signin.css') }}">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -21,7 +21,7 @@
       <h2>Welcome back</h2>
       <p class="subtitle">Sign in to your account to continue</p>
       
-      <form id="signinForm">
+      <form id="signinForm" method="POST" action="{{ url_for('signin_post') }}">
         <!-- Email -->
         <div class="input-group">
           <i class="fa-solid fa-envelope"></i>
@@ -47,11 +47,11 @@
       </form>
 
       <p class="footer-text">
-        Don’t have an account? <a href="/app/templates/signup.html">Sign up</a>
+        Don’t have an account? <a href="{{ url_for('signup') }}">Sign up</a>
       </p>
     </div>
   </div>
 
-  <script src="/app/static/js/signin.js"></script>
+  <script src="{{ url_for('static', filename='js/signin.js') }}"></script>
 </body>
 </html>

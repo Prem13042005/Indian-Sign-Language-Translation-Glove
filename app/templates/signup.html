@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Account | SignGlove AI</title>
-  <link rel="stylesheet" href="/app/static/css/signup.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -22,16 +22,12 @@
       <h2>Create your account</h2>
       <p class="subtitle">Join the future of accessible communication</p>
       
-      <form id="signupForm">
+      <form id="signupForm" method="POST" action="{{ url_for('signup_post') }}">
         <!-- Name Row -->
         <div class="input-row">
           <div class="input-group">
             <i class="fa-solid fa-user"></i>
-            <input type="text" placeholder="First Name" required>
-          </div>
-          <div class="input-group">
-            <i class="fa-solid fa-user"></i>
-            <input type="text" placeholder="Last Name" required>
+            <input type="text" placeholder="UserName" required>
           </div>
         </div>
 
@@ -64,11 +60,11 @@
       </form>
 
       <p class="footer-text">
-        Already have an account? <a href="/app/templates/signin.html">Sign in</a>
+        Already have an account? <a href="{{ url_for('signin') }}">Sign in</a>
       </p>
     </div>
   </div>
 
-  <script src="/app/static/js/signup.js"></script>
+  <script src="{{ url_for('static', filename='js/signup.js') }}"></script>
 </body>
 </html>

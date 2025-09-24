@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SignGlove AI</title>
-  <link rel="stylesheet" href="/app/static/css/index.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,15 +15,15 @@
     <div class="logo">SignGlove AI</div>
     <nav>
       <ul class="nav-links">
-        <li><a href="#">Home</a></li>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
         <li><a href="#">Features</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
       </ul>
     </nav>
     <div class="nav-actions">
-      <a href="/app/templates/signin.html" class="signin">Sign In</a>
-      <a href="/app/templates/signup.html" class="btn">Get Started</a>
+      <a href="{{ url_for('signin') }}" class="signin">Sign In</a>
+      <a href="{{ url_for('signup') }}" class="btn">Get Started</a>
     </div>
   </header>
 
@@ -33,7 +33,7 @@
       <span class="highlight">REVOLUTIONARY TECHNOLOGY</span>
       <h1>Bridge Communication with <span class="gradient">AI-Powered</span> Sign Language</h1>
       <p>Transform sign language into real-time text and speech with our cutting-edge AI translation glove. Making communication accessible for everyone.</p>
-      <a href="/app/templates/signup.html" class="btn large">Get Started Today</a>
+      <a href="{{ url_for('signup') }}" class="btn large">Get Started Today</a>
       <div class="stats">
         <div><strong>95%</strong><br>Accuracy Rate</div>
         <div><strong>500ms</strong><br>Response Time</div>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="hero-image">
-      <img src="hero-glove-B9W0Lv7M.jpg" alt="AI Glove">
+      <img src="{{ url_for('static', filename='hero-glove-B9W0Lv7M.jpg') }}" alt="AI Glove">
     </div>
   </section>
 

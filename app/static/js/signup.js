@@ -25,3 +25,13 @@ document.getElementById("signupForm").addEventListener("submit", (e) => {
   }
   alert("Account created successfully!");
 });
+
+// password confirmation validation
+document.getElementById('signupForm').addEventListener('submit', function(e) {
+    var password = document.getElementById('password').value;
+    var confirmPassword = document.getElementById('confirmPassword').value;
+    if (password !== confirmPassword) {
+        alert('Passwords do not match');
+        e.preventDefault();
+    }
+});

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignGlove AI - Translation History</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+     body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9fb;
+      color: #333;
+      transition: margin-left 0.3s;
+    }
+
+    /* Hamburger Icon */
+    .menu-toggle {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1001;
+      color: #5a31f4;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -220px; /* hidden by default */
+      height: 100%;
+      width: 220px;
+      background: #fff;
+      border-right: 1px solid #eee;
+      transition: left 0.3s;
+      padding-top: 60px;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    /* Hover behavior */
+    .menu-toggle:hover + .sidebar,
+    .sidebar:hover {
+      left: 0;
+    }
+
+    /* Adjust content when sidebar is shown */
+    .menu-toggle:hover ~ .main,
+    .sidebar:hover ~ .main {
+      margin-left: 220px;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      color: #333;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .nav a i {
+      min-width: 25px;
+      font-size: 18px;
+      color: #5a31f4;
+    }
+
+    .nav a:hover {
+      background: #5a31f4;
+      color: #fff;
+      border-radius: 8px;
+    }
+
+    .nav a:hover i {
+      color: #fff;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 60px;
+      padding: 20px;
+      /* width: calc(100% - 60px); */
+      transition: margin-left 0.3s, width 0.3s;
+    }
+
+    .sidebar:hover ~ .main-content {
+      margin-left: 220px;
+      /* width: calc(100% - 220px); */
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 10px 0;
+    }
+
+    .topbar i {
+      margin-left: 20px;
+      font-size: 18px;
+      cursor: pointer;
+      color: #555;
+    }
+
+    h2 {
+      margin: 10px 0;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    p.subtitle {
+      margin: 0 0 20px;
+      color: #666;
+    }
+
+    /* Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    .card h3 {
+      margin: 10px 0;
+      font-size: 22px;
+      color: #333;
+    }
+
+    .card p {
+      margin: 0;
+      color: #777;
+      font-size: 14px;
+    }
+
+    /* Search + Filter */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .search-bar input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 14px;
+    }
+
+    .search-bar .actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-bar button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      background: #6a0dad;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .search-bar button:hover {
+      background: #530a99;
+    }
+
+    /* Timeline */
+    .timeline {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .timeline h3 {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .entry {
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .entry:last-child {
+      border-bottom: none;
+    }
+
+    .entry .details {
+      flex: 1;
+    }
+
+    .entry h4 {
+      margin: 0 0 5px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .entry p {
+      margin: 3px 0;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .entry .actions i {
+      margin-left: 15px;
+      font-size: 16px;
+      cursor: pointer;
+      color: #555;
+    }
+
+    .entry .actions i:hover {
+      color: #6a0dad;
+    }
+  </style>
+</head>
+<body>
+ <!-- Hamburger -->
+  <i class="fa-solid fa-bars menu-toggle"></i>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="nav">
+      <a href="#"><i class="fa-solid fa-house"></i><span> Home</span></a>
+      <a href="live_translation.html"><i class="fa-solid fa-microphone"></i><span> Live Translation</span></a>
+      <a href="#"><i class="fa-solid fa-upload"></i><span> Upload Gestures</span></a>
+      <a href="history.html"><i class="fa-solid fa-clock-rotate-left"></i><span> History</span></a>
+      <a href="profile.html"><i class="fa-solid fa-user"></i><span> Profile</span></a>
+      <a href="#"><i class="fa-solid fa-gear"></i><span> Settings</span></a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="topbar">
+      <i class="fas fa-bell"></i>
+      <i class="fas fa-cog"></i>
+      <i class="fas fa-user-circle"></i>
+    </div>
+
+    <h2>Translation History</h2>
+    <p class="subtitle">View and manage your past ISL translations</p>
+
+    <!-- Stats Cards -->
+    <div class="cards">
+      <div class="card"><h3>5</h3><p>Total Translations</p></div>
+      <div class="card"><h3>90%</h3><p>Avg Confidence</p></div>
+      <div class="card"><h3>0.9s</h3><p>Avg Response</p></div>
+      <div class="card"><h3>Hello</h3><p>Most Used</p></div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-bar">
+      <input type="text" placeholder="Search gestures or translations...">
+      <div class="actions">
+        <button><i class="fas fa-filter"></i> Filter</button>
+        <button><i class="fas fa-download"></i> Export</button>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+      <h3><i class="fas fa-stream"></i> Translation Timeline</h3>
+
+      <div class="entry">
+        <div class="details">
+          <h4>Hello <span style="color:#6a0dad; font-size:12px;">95% confidence - 0.8s</span></h4>
+          <p>नमस्ते आपका स्वागत है।</p>
+          <p><i class="fas fa-language"></i> Hindi • <i class="fas fa-clock"></i> 2024-01-20</p>
+        </div>
+        <div class="actions">
+          <i class="fas fa-volume-up"></i>
+          <i class="fas fa-trash"></i>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="details">
+          <h4>Thank you <span style="color:#6a0dad; font-size:12px;">92% confidence - 0.6s</span></h4>
+          <p>Thank you very much</p>
+          <p><i class="fas fa-language"></i> English • <i class="fas fa-clock"></i> 2024-01-20</p>
+        </div>
+        <div class="actions">
+          <i class="fas fa-volume-up"></i>
+          <i class="fas fa-trash"></i>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="details">
+          <h4>Good morning <span style="color:#6a0dad; font-size:12px;">88% confidence - 1.2s</span></h4>
+          <p>शुभ प्रभात</p>
+          <p><i class="fas fa-language"></i> Hindi • <i class="fas fa-clock"></i> 2024-01-20</p>
+        </div>
+        <div class="actions">
+          <i class="fas fa-volume-up"></i>
+          <i class="fas fa-trash"></i>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

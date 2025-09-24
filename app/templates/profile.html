@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Settings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9fb;
+      color: #333;
+      transition: margin-left 0.3s;
+    }
+
+    /* Hamburger Icon */
+    .menu-toggle {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1001;
+      color: #5a31f4;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -220px; /* hidden by default */
+      height: 100%;
+      width: 220px;
+      background: #fff;
+      border-right: 1px solid #eee;
+      transition: left 0.3s;
+      padding-top: 60px;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    /* Hover behavior */
+    .menu-toggle:hover + .sidebar,
+    .sidebar:hover {
+      left: 0;
+    }
+
+    /* Adjust content when sidebar is shown */
+    .menu-toggle:hover ~ .main,
+    .sidebar:hover ~ .main {
+      margin-left: 220px;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      color: #333;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .nav a i {
+      min-width: 25px;
+      font-size: 18px;
+      color: #5a31f4;
+    }
+
+    .nav a:hover {
+      background: #5a31f4;
+      color: #fff;
+      border-radius: 8px;
+    }
+
+    .nav a:hover i {
+      color: #fff;
+    }
+
+
+    .main {
+    margin: 20px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 30px;
+      padding: 30px;
+    }
+
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #222;
+    }
+
+    /* Avatar */
+    .avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 20px;
+      margin-right: 15px;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .profile-info {
+      flex: 1;
+    }
+
+    .premium {
+      display: inline-block;
+      padding: 2px 8px;
+      background: #f3f4f6;
+      border-radius: 6px;
+      font-size: 12px;
+      margin-top: 4px;
+      color: #5a42f5;
+    }
+
+    .edit-btn {
+      background: #f3f4f6;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    /* Toggles */
+    .toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .toggle input[type="checkbox"] {
+      width: 40px;
+      height: 20px;
+      appearance: none;
+      background: #ddd;
+      border-radius: 20px;
+      position: relative;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .toggle input:checked {
+      background: #5a42f5;
+    }
+
+    .toggle input:checked::before {
+      left: 22px;
+    }
+
+    .toggle input::before {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    /* Stats */
+    .stats {
+      font-size: 22px;
+      font-weight: bold;
+      color: #5a42f5;
+    }
+
+    /* Frequent phrases */
+    .phrases ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .phrases li {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 14px;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* Buttons */
+    .btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      background: #f3f4f6;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #5a42f5;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+ <!-- Hamburger -->
+  <i class="fa-solid fa-bars menu-toggle"></i>
+
+  <!-- Sidebar -->
+<div class="sidebar">
+    <div class="nav">
+      <a href="#"><i class="fa-solid fa-house"></i><span> Home</span></a>
+      <a href="live_translation.html"><i class="fa-solid fa-microphone"></i><span> Live Translation</span></a>
+      <a href="#"><i class="fa-solid fa-upload"></i><span> Upload Gestures</span></a>
+      <a href="history.html"><i class="fa-solid fa-clock-rotate-left"></i><span> History</span></a>
+      <a href="profile.html"><i class="fa-solid fa-user"></i><span> Profile</span></a>
+      <a href="#"><i class="fa-solid fa-gear"></i><span> Settings</span></a>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- Left Column -->
+    <div class="left">
+      <!-- Personal Info -->
+      <div class="card">
+        <h2>👤 Personal Information</h2>
+        <div class="profile-header">
+          <div class="avatar">AJ</div>
+          <div class="profile-info">
+            <div><b>Alex Johnson</b></div>
+            <div>alex.johnson@email.com</div>
+            <span class="premium">Premium Member</span>
+          </div>
+          <button class="edit-btn">✏️ Edit Profile</button>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" value="Alex Johnson">
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" value="alex.johnson@email.com">
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" value="+91 98765 43210">
+          </div>
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" value="Mumbai, India">
+          </div>
+          <div class="form-group" style="grid-column: span 2;">
+            <label>Bio</label>
+            <textarea rows="3">Passionate about accessible technology and bridging communication gaps through AI-powered solutions.</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Language & Voice -->
+      <div class="card">
+        <h2>🌐 Language & Voice Settings</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Preferred Output Language</label>
+            <select>
+              <option>English</option>
+              <option>Hindi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Voice Settings</label>
+            <select>
+              <option>Female - Hindi</option>
+              <option>Male - English</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="toggle">
+          <label>Auto-save Translations</label>
+          <input type="checkbox" checked>
+        </div>
+        <div class="toggle">
+          <label>Push Notifications</label>
+          <input type="checkbox" checked>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="right">
+      <!-- Stats -->
+      <div class="card">
+        <h2>⭐ Usage Statistics</h2>
+        <p class="stats">1,247</p>
+        <p>Total Translations</p>
+        <p class="stats">95.8%</p>
+        <p>Accuracy Rate</p>
+        <p class="stats">47</p>
+        <p>Days Active</p>
+      </div>
+
+      <!-- Frequent Phrases -->
+      <div class="card phrases">
+        <h2>💬 Frequent Phrases</h2>
+        <ul>
+          <li><span>Thank you</span><span>45</span></li>
+          <li><span>Good morning</span><span>32</span></li>
+          <li><span>Help</span><span>28</span></li>
+          <li><span>Water</span><span>23</span></li>
+          <li><span>Food</span><span>19</span></li>
+        </ul>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="card">
+        <h2>⚡ Quick Actions</h2>
+        <button class="btn">🔊 Test Voice Settings</button>
+        <button class="btn">⚙️ Privacy Settings</button>
+        <button class="btn">📄 Export Data</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
